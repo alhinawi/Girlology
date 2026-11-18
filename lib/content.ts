@@ -54,7 +54,7 @@ export const ui = {
     toolsTitle: 'أدوات تساعدك',
     extrasKicker: 'أدوات',
     extrasTitle: 'طبق اللي قريته',
-    extrasLead: 'نصائح سريعة، اختبار تفاعلي، أسئلة شائعة، قصص من الواقع، وقاموس لمصطلحات التعامل — كلها بالمصري.',
+    extrasLead: 'بدايات كلام ورسايل صباح، نصائح سريعة، اختبار تفاعلي، أسئلة وأجوبة، قصص وقاموس، كلها بالمصري.',
     sectionOf: 'قسم',
     topicsCount: 'موضوعات',
     openSection: 'افتح القسم',
@@ -324,6 +324,18 @@ export type Extra = {
 };
 
 export const extras: Extra[] = [
+  {
+    slug: 'pickup-lines', icon: 'chat', img: '/images/conversation-photo.jpg',
+    titleAr: 'كلام يفتح حوار', titleEn: 'Pickup Lines',
+    descAr: '30 بداية كلام ومجاملة بالمصري، من غير تصنع ولا ضغط. اختار اللي يناسب الموقف وخليه بصوتك.',
+    descEn: '30 respectful openers and compliments. Choose for the moment and make the words your own.',
+  },
+  {
+    slug: 'morning-texts', icon: 'flower', img: '/images/morning-photo.jpg',
+    titleAr: 'رسايل الصباح', titleEn: 'Morning Texts',
+    descAr: '30 رسالة صباح، من السلام الخفيف للتشجيع وكلام الحب في علاقة واضحة. رسالة واحدة بذوق تكفي.',
+    descEn: '30 morning texts, from a simple hello to encouragement and affection for a partner. One thoughtful message is enough.',
+  },
   {
     slug: 'tips',
     icon: 'lightbulb',

@@ -2,6 +2,7 @@
 import React from 'react';
 import {
   Handshake, MessageCircle, Ear, Star, Flower2, Users, Heart, ShieldCheck, Gem, TriangleAlert,
+  Lightbulb, CircleHelp, MessagesSquare, BookOpen, NotebookText,
 } from 'lucide-react';
 
 const map: Record<string, React.ComponentType<{ size?: number | string; className?: string }>> = {
@@ -15,6 +16,11 @@ const map: Record<string, React.ComponentType<{ size?: number | string; classNam
   shield: ShieldCheck,
   rings: Gem,
   warning: TriangleAlert,
+  lightbulb: Lightbulb,
+  quiz: CircleHelp,
+  qa: MessagesSquare,
+  book: BookOpen,
+  notebook: NotebookText,
 };
 
 export default function TopicIcon({ name, size = 18, className }: { name: string; size?: number | string; className?: string }) {

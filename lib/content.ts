@@ -51,6 +51,27 @@ export const ui = {
     articlesDone: 'مقال مقروء',
     noFavs: 'لسه مفيش مفضلة — دوس على القلب في أي مقال يعجبك',
     sidebarTitle: 'أقسام الموقع',
+    toolsTitle: 'أدوات تساعدك',
+    extrasKicker: 'أدوات',
+    extrasTitle: 'طبق اللي قريته',
+    extrasLead: 'نصائح سريعة، اختبار تفاعلي، أسئلة شائعة، قصص من الواقع، وقاموس لمصطلحات التعامل — كلها بالمصري.',
+    sectionOf: 'قسم',
+    topicsCount: 'موضوعات',
+    openSection: 'افتح القسم',
+    quizStart: 'ابدأ الاختبار',
+    quizQuestion: 'سؤال',
+    quizOf: 'من',
+    quizCorrect: 'إجابة صحيحة!',
+    quizWrong: 'إجابة غلط',
+    quizNext: 'السؤال اللي بعده',
+    quizResult: 'نتيجتك',
+    quizRetry: 'جرب تاني',
+    quizGreat: 'ممتاز! انت فاهم المبدأ صح',
+    quizGood: 'كويس، بس راجع المواضيع اللي غلطت فيها',
+    quizBad: 'محتاج تقري المواضيع تاني بهدوء — وهتتحسن',
+    moral: 'العبرة',
+    term: 'المصطلح',
+    allTopics: 'كل المواضيع',
   },
   en: {
     brand: 'Girlology',
@@ -102,6 +123,27 @@ export const ui = {
     articlesDone: 'articles read',
     noFavs: 'No favorites yet — tap the heart on any article you like',
     sidebarTitle: 'Site sections',
+    toolsTitle: 'Helpful tools',
+    extrasKicker: 'Tools',
+    extrasTitle: 'Practice what you read',
+    extrasLead: 'Quick tips, an interactive quiz, common questions, real-life stories and a glossary of dealing terms.',
+    sectionOf: 'Section',
+    topicsCount: 'topics',
+    openSection: 'Open section',
+    quizStart: 'Start the quiz',
+    quizQuestion: 'Question',
+    quizOf: 'of',
+    quizCorrect: 'Correct!',
+    quizWrong: 'Wrong answer',
+    quizNext: 'Next question',
+    quizResult: 'Your score',
+    quizRetry: 'Try again',
+    quizGreat: 'Excellent! You really get it',
+    quizGood: 'Good, but review the topics you missed',
+    quizBad: 'Take your time and re-read the topics — you will improve',
+    moral: 'The lesson',
+    term: 'Term',
+    allTopics: 'All topics',
   },
 } as const;
 
@@ -219,6 +261,113 @@ export const articleMeta: Omit<Article, 'ar' | 'en'>[] = [
     excerptAr: 'المطاردة، الغيرة الزيادة، الكلام المعسول الفاضي.. أشهر غلطات الشباب وإزاي تتجنبها قبل ما تخسر.',
     excerptEn: 'Chasing, jealousy, empty sweet talk — the most common mistakes guys make and how to avoid them before you lose.',
     minutes: 7,
+  },
+];
+
+export type Section = {
+  slug: string;
+  icon: string;
+  titleAr: string;
+  titleEn: string;
+  descAr: string;
+  descEn: string;
+  topics: string[];
+};
+
+export const sections: Section[] = [
+  {
+    slug: 'foundations',
+    icon: 'shield',
+    titleAr: 'الأساسيات',
+    titleEn: 'The Foundations',
+    descAr: 'قبل أي كلمة أو خطوة: الاحترام، الثقة بالنفس، والذوق العام. دي القاعدة اللي بيتبني عليها كل حاجة بعد كده.',
+    descEn: 'Before any word or step: respect, self-confidence and good manners. This is the base everything else builds on.',
+    topics: ['respect', 'confidence', 'manners'],
+  },
+  {
+    slug: 'talking',
+    icon: 'chat',
+    titleAr: 'فن الكلام والاستماع',
+    titleEn: 'Talking & Listening',
+    descAr: 'إزاي تبدأ محادثة طبيعية، تسأل صح، وتسمع بجد. الكلام الحلو فن — والاستماع نصه التاني.',
+    descEn: 'How to start a natural conversation, ask the right questions, and really listen. Good talk is an art — listening is its other half.',
+    topics: ['talk', 'listen'],
+  },
+  {
+    slug: 'relationships',
+    icon: 'heart',
+    titleAr: 'العلاقات والمشاعر',
+    titleEn: 'Relationships & Feelings',
+    descAr: 'الصداقة النضيفة، التعبير عن الإعجاب باحترام، استقبال الرفض بكرامة، والغلطات اللي بتبوظ كل حاجة.',
+    descEn: 'Clean friendship, expressing interest respectfully, taking rejection with dignity, and the mistakes that ruin everything.',
+    topics: ['friendship', 'interest', 'rejection', 'mistakes'],
+  },
+  {
+    slug: 'marriage-path',
+    icon: 'rings',
+    titleAr: 'الطريق للجواز',
+    titleEn: 'The Road to Marriage',
+    descAr: 'لما النية تبقى جواز: إزاي تجهز نفسك، وتتقدم بالمعروف، وتعدي فترة الخطوبة صح.',
+    descEn: 'When marriage is the goal: how to prepare yourself, propose honorably, and pass the engagement period right.',
+    topics: ['marriage'],
+  },
+];
+
+export type Extra = {
+  slug: string;
+  icon: string;
+  img: string;
+  titleAr: string;
+  titleEn: string;
+  descAr: string;
+  descEn: string;
+};
+
+export const extras: Extra[] = [
+  {
+    slug: 'tips',
+    icon: 'lightbulb',
+    img: '/images/tips.png',
+    titleAr: 'نصائح سريعة',
+    titleEn: 'Quick Tips',
+    descAr: '15 نصيحة على الطاير تحفظها وتطبقها في أي موقف.',
+    descEn: '15 quick tips to memorize and apply in any situation.',
+  },
+  {
+    slug: 'quiz',
+    icon: 'quiz',
+    img: '/images/quiz.png',
+    titleAr: 'اختبر نفسك',
+    titleEn: 'Test Yourself',
+    descAr: '8 أسئلة تفاعلية تقيس فهمك لفن التعامل المحترم.',
+    descEn: '8 interactive questions that measure your understanding of respectful dealing.',
+  },
+  {
+    slug: 'qa',
+    icon: 'qa',
+    img: '/images/qa.png',
+    titleAr: 'أسئلة وأجوبة',
+    titleEn: 'Q & A',
+    descAr: 'أكتر الأسئلة اللي بتدور في دماغ الشباب — وإجابات صريحة.',
+    descEn: 'The questions on every young man\'s mind — with honest answers.',
+  },
+  {
+    slug: 'stories',
+    icon: 'book',
+    img: '/images/stories.png',
+    titleAr: 'قصص وعبر',
+    titleEn: 'Stories & Lessons',
+    descAr: 'قصص قصيرة من واقعنا، وورا كل قصة عبرة تتعلم منها.',
+    descEn: 'Short stories from real life, each with a lesson to learn.',
+  },
+  {
+    slug: 'glossary',
+    icon: 'notebook',
+    img: '/images/glossary.png',
+    titleAr: 'قاموس التعامل',
+    titleEn: 'Dealing Glossary',
+    descAr: '12 مصطلح بتسمعهم كتير في موضوع العلاقات — معناهم الصح.',
+    descEn: '12 terms you hear a lot about relationships — and what they really mean.',
   },
 ];
 

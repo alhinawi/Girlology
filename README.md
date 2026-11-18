@@ -4,6 +4,20 @@
 
 A premium, fully bilingual (Egyptian Arabic / English) guide site about respectful communication and relationships: how to talk, listen, build confidence, keep clean friendships, handle rejection with dignity, and walk the honest path to marriage — no tricks, no manipulation, just character.
 
+## Live site and demo
+
+**[Open Girlology](https://girlology.pages.dev/)**
+
+Captured from the live Arabic site on 18 November 2026. The short GIF cycles through home, the foundations section and the respect article. These are actual navigation captures, not generated mockups.
+
+[![Girlology live home, topics and reading tour](docs/media/demo.gif)](https://girlology.pages.dev/)
+
+| Desktop | Mobile |
+| --- | --- |
+| ![Girlology home on desktop](docs/media/desktop.webp) | ![Girlology home on mobile](docs/media/mobile.webp) |
+
+[Foundations](https://girlology.pages.dev/section/foundations/) · [Read about respect](https://girlology.pages.dev/article/respect/)
+
 ## Topics
 
 1. **الاحترام أساس كل حاجة** — Respect comes first
@@ -31,7 +45,7 @@ A premium, fully bilingual (Egyptian Arabic / English) guide site about respectf
 - Next.js 15 (static export) + React 19 + TypeScript
 - Tailwind CSS 4 + shadcn/ui components (button, card, sheet, switch, badge, separator)
 - Lucide SVG icons
-- Deployed on Cloudflare Pages: girlology.pages.dev
+- Deployed on Cloudflare Pages: [girlology.pages.dev](https://girlology.pages.dev/)
 
 ## Run locally
 

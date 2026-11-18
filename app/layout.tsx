@@ -3,6 +3,10 @@ import './globals.css';
 import { AppProvider } from '../components/Lang';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata = {
   title: 'Girlology — فن التعامل المحترم',
@@ -11,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" className={cn("font-sans", geist.variable)}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -20,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body data-theme="dark">
+      <body data-theme="dark" className="bg-background font-body text-foreground">
         <AppProvider>
           <Header />
           <main>{children}</main>

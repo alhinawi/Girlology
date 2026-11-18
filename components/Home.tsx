@@ -1,60 +1,104 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import Icon from './Icons';
+import { Heart, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { useApp } from './Lang';
-import { articles } from '../lib/articles';
-import { totalArticles } from '../lib/content';
+import { articles } from '@/lib/articles';
+import { totalArticles } from '@/lib/content';
+import TopicIcon from './topic-icon';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   const { t, lang, read } = useApp();
+  const Arrow = lang === 'ar' ? ArrowLeft : ArrowRight;
+
   return (
     <>
-      <section className="hero">
-        <div className="container hero-grid">
+      <section className="relative overflow-hidden py-14 pb-10 md:py-20">
+        <div className="mx-auto grid w-full max-w-[1180px] grid-cols-1 items-center gap-10 px-[22px] lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <span className="hero-badge"><Icon name="heart" size={15} /> {t.badge}</span>
-            <h1>{t.heroTitleA} <span className="grad">{t.heroTitleB}</span></h1>
-            <p className="lead">{t.heroLead}</p>
-            <div className="hero-actions">
-              <Link href={`/article/${articles[0].slug}/`} className="btn-primary">
-                {t.ctaStart} <Icon name="arrow" size={18} />
-              </Link>
-              <a href="#about" className="btn-ghost">{t.ctaAbout}</a>
+            <Badge variant="outline" className="mb-4 gap-2 rounded-full border-border bg-card px-4 py-2 font-head text-sm font-bold text-primary">
+              <Heart size={15} /> {t.badge}
+            </Badge>
+            <h1 className="mb-4 font-head text-[2rem] font-black leading-[1.4] md:text-[3rem]">
+              {t.heroTitleA}{' '}
+              <span className="bg-gradient-to-l from-primary to-gold bg-clip-text text-transparent">{t.heroTitleB}</span>
+            </h1>
+            <p className="mb-7 max-w-[56ch] text-lg text-muted-foreground">{t.heroLead}</p>
+            <div className="flex flex-wrap gap-3.5">
+              <Button
+                size="lg"
+                render={<Link href={`/article/${articles[0].slug}/`} />}
+                className="h-[52px] gap-2.5 rounded-2xl bg-gradient-to-br from-primary to-purple-500 px-7 font-head text-base font-extrabold text-white shadow-[0_10px_30px_rgba(244,114,160,0.35)] transition-transform hover:-translate-y-0.5 hover:from-primary hover:to-purple-500"
+              >
+                {t.ctaStart} <Arrow size={18} />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                render={<a href="#about" />}
+                className="h-[52px] rounded-2xl border-border bg-card px-6 font-head text-base font-bold"
+              >
+                {t.ctaAbout}
+              </Button>
             </div>
           </div>
-          <div className="hero-img-wrap">
-            <img className="hero-img" src="/images/hero.png" alt="Girlology" />
+          <div className="relative before:absolute before:-inset-[8%] before:-z-10 before:rounded-[40px] before:bg-[radial-gradient(circle_at_30%_20%,rgba(244,114,160,0.35),transparent_60%),radial-gradient(circle_at_80%_90%,rgba(168,85,247,0.3),transparent_55%)] before:blur-[30px]">
+            <img className="w-full rounded-[28px] border border-border shadow-2xl" src="/images/hero.png" alt="Girlology" />
           </div>
         </div>
-        <div className="container stats">
-          <div className="stat"><b>{totalArticles}</b><span>{t.stat1}</span></div>
-          <div className="stat"><b>50+</b><span>{t.stat2}</span></div>
-          <div className="stat"><b>100%</b><span>{t.stat3}</span></div>
-          <div className="stat"><b>0$</b><span>{t.stat4}</span></div>
+
+        <div className="mx-auto mt-11 grid w-full max-w-[1180px] grid-cols-2 gap-4 px-[22px] md:grid-cols-4">
+          {[
+            { n: String(totalArticles), l: t.stat1 },
+            { n: '50+', l: t.stat2 },
+            { n: '100%', l: t.stat3 },
+            { n: '0$', l: t.stat4 },
+          ].map((s, i) => (
+            <div key={i} className="rounded-[20px] border border-border bg-card p-5 text-center">
+              <b className="block font-head text-3xl text-primary">{s.n}</b>
+              <span className="text-sm text-muted-foreground">{s.l}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="container">
-        <div className="section-head">
-          <div className="kicker">{t.sectionsKicker}</div>
-          <h2>{t.sectionsTitle}</h2>
-          <p>{t.sectionsLead}</p>
+      <section className="mx-auto w-full max-w-[1180px] px-[22px]">
+        <div className="mb-7 mt-10">
+          <div className="font-head font-extrabold tracking-wide text-primary">{t.sectionsKicker}</div>
+          <h2 className="font-head text-[clamp(1.6rem,3vw,2.3rem)] font-black">{t.sectionsTitle}</h2>
+          <p className="max-w-[70ch] text-muted-foreground">{t.sectionsLead}</p>
         </div>
-        <div className="cards">
+        <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((a, i) => {
             const done = read.includes(a.slug);
             return (
-              <Link key={a.slug} href={`/article/${a.slug}/`} className="card">
-                <img className="card-img" src={a.img} alt={lang === 'ar' ? a.titleAr : a.titleEn} loading={i > 2 ? 'lazy' : undefined} />
-                <div className="card-body">
-                  <span className="card-tag"><Icon name={a.icon} size={13} /> {t.sectionsKicker} {i + 1}</span>
-                  <h3>{lang === 'ar' ? a.titleAr : a.titleEn}</h3>
-                  <p>{lang === 'ar' ? a.excerptAr : a.excerptEn}</p>
-                  <div className="card-foot">
-                    <span className="read-link">{t.readMore} <Icon name="arrow" size={15} /></span>
-                    <span className="mini-state">
-                      {done ? <><Icon name="check" size={14} /> {t.alreadyRead}</> : <>{a.minutes} {t.minute}</>}
+              <Link
+                key={a.slug}
+                href={`/article/${a.slug}/`}
+                className="group flex flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:bg-accent"
+              >
+                <div className="overflow-hidden">
+                  <img
+                    className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    src={a.img}
+                    alt={lang === 'ar' ? a.titleAr : a.titleEn}
+                    loading={i > 2 ? 'lazy' : undefined}
+                  />
+                </div>
+                <div className="flex flex-1 flex-col gap-2.5 p-5">
+                  <Badge variant="secondary" className="gap-1.5 self-start rounded-full bg-primary/10 font-head text-xs font-bold text-primary hover:bg-primary/10">
+                    <TopicIcon name={a.icon} size={13} /> {t.sectionsKicker} {i + 1}
+                  </Badge>
+                  <h3 className="font-head text-xl font-extrabold">{lang === 'ar' ? a.titleAr : a.titleEn}</h3>
+                  <p className="flex-1 text-[0.98rem] text-muted-foreground">{lang === 'ar' ? a.excerptAr : a.excerptEn}</p>
+                  <div className="mt-1.5 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-2 font-head font-extrabold text-primary">
+                      {t.readMore} <Arrow size={15} />
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                      {done ? <><Check size={14} /> {t.alreadyRead}</> : <>{a.minutes} {t.minute}</>}
                     </span>
                   </div>
                 </div>
@@ -64,13 +108,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container" id="about">
-        <div className="about-strip">
+      <section className="mx-auto w-full max-w-[1180px] px-[22px]" id="about">
+        <div className="my-14 grid grid-cols-1 items-center gap-8 rounded-[28px] border border-border bg-muted/60 p-8 md:grid-cols-2 md:p-10">
           <div>
-            <h2>{t.aboutTitle}</h2>
-            <p>{t.aboutBody}</p>
+            <h2 className="mb-3 font-head text-2xl font-black md:text-[1.7rem]">{t.aboutTitle}</h2>
+            <p className="text-muted-foreground">{t.aboutBody}</p>
           </div>
-          <img src="/images/about.png" alt="Cairo" />
+          <img src="/images/about.png" alt="Cairo" className="rounded-[20px] shadow-2xl" />
         </div>
       </section>
     </>

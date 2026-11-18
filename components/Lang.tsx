@@ -82,7 +82,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   return (
     <C.Provider value={{ lang, setLang, theme, setTheme, t: ui[lang] as UIStrings, favs, toggleFav, read, markRead, toast }}>
       {children}
-      {toastMsg ? <div className="toast" role="status">{toastMsg}</div> : null}
+      {toastMsg ? (
+        <div
+          role="status"
+          className="fixed bottom-6 start-1/2 z-[100] -translate-x-1/2 rounded-[14px] border border-primary bg-card px-6 py-3 font-head font-bold text-foreground shadow-2xl rtl:translate-x-1/2"
+        >
+          {toastMsg}
+        </div>
+      ) : null}
     </C.Provider>
   );
 }

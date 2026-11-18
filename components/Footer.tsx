@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useApp } from './Lang';
 import { articles } from '@/lib/articles';
+import { sections, extras } from '@/lib/content';
 import { Separator } from '@/components/ui/separator';
 
 function WhatsAppIcon({ size = 18 }: { size?: number }) {
@@ -33,19 +34,19 @@ export default function Footer() {
           <div>
             <h4 className="mb-3 font-head font-bold text-primary">{t.footerTopics}</h4>
             <div className="flex flex-col gap-2">
-              {articles.slice(0, 5).map((a) => (
-                <Link key={a.slug} href={`/article/${a.slug}/`} className="text-muted-foreground transition-colors hover:text-primary">
-                  {lang === 'ar' ? a.titleAr : a.titleEn}
+              {sections.map((sec) => (
+                <Link key={sec.slug} href={`/section/${sec.slug}/`} className="text-muted-foreground transition-colors hover:text-primary">
+                  {lang === 'ar' ? sec.titleAr : sec.titleEn}
                 </Link>
               ))}
             </div>
           </div>
           <div>
-            <h4 className="mb-3 font-head font-bold text-primary">{t.footerTopics}</h4>
+            <h4 className="mb-3 font-head font-bold text-primary">{t.toolsTitle}</h4>
             <div className="flex flex-col gap-2">
-              {articles.slice(5).map((a) => (
-                <Link key={a.slug} href={`/article/${a.slug}/`} className="text-muted-foreground transition-colors hover:text-primary">
-                  {lang === 'ar' ? a.titleAr : a.titleEn}
+              {extras.map((ex) => (
+                <Link key={ex.slug} href={`/${ex.slug}/`} className="text-muted-foreground transition-colors hover:text-primary">
+                  {lang === 'ar' ? ex.titleAr : ex.titleEn}
                 </Link>
               ))}
             </div>

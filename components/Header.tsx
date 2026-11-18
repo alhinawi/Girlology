@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Menu, Heart, Home, Settings, X } from 'lucide-react';
+import { Menu, Heart, Home, Settings, X, ChevronDown } from 'lucide-react';
 import { useApp } from './Lang';
 import { articles } from '@/lib/articles';
+import { sections, extras } from '@/lib/content';
 import TopicIcon from './topic-icon';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -35,17 +36,55 @@ export default function Header() {
               >
                 <Home size={18} className="shrink-0 text-primary" /> {t.backHome}
               </Link>
-              {articles.map((a) => (
-                <Link
-                  key={a.slug}
-                  href={`/article/${a.slug}/`}
-                  onClick={() => setSideOpen(false)}
-                  className="flex items-center gap-3 rounded-xl px-3.5 py-3 text-foreground transition-colors hover:bg-card hover:text-primary"
-                >
-                  <TopicIcon name={a.icon} size={18} className="shrink-0 text-primary" />
-                  <span>{lang === 'ar' ? a.titleAr : a.titleEn}</span>
-                </Link>
+
+              {sections.map((sec) => (
+                <details key={sec.slug} className="group rounded-xl">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-xl px-3.5 py-3 font-head font-bold transition-colors hover:bg-card [&::-webkit-details-marker]:hidden">
+                    <span className="flex items-center gap-3">
+                      <TopicIcon name={sec.icon} size={18} className="shrink-0 text-primary" />
+                      {lang === 'ar' ? sec.titleAr : sec.titleEn}
+                    </span>
+                    <ChevronDown size={16} className="shrink-0 text-muted-foreground transition-transform group-open:rotate-180" />
+                  </summary>
+                  <div className="ms-4 flex flex-col gap-0.5 border-s border-border ps-3 pb-1">
+                    {sec.topics.map((slug) => {
+                      const a = articles.find((x) => x.slug === slug)!;
+                      return (
+                        <Link
+                          key={slug}
+                          href={`/article/${slug}/`}
+                          onClick={() => setSideOpen(false)}
+                          className="rounded-lg px-3 py-2 text-[0.95rem] text-muted-foreground transition-colors hover:bg-card hover:text-primary"
+                        >
+                          {lang === 'ar' ? a.titleAr : a.titleEn}
+                        </Link>
+                      );
+                    })}
+                    <Link
+                      href={`/section/${sec.slug}/`}
+                      onClick={() => setSideOpen(false)}
+                      className="rounded-lg px-3 py-2 font-head text-[0.9rem] font-bold text-primary transition-colors hover:bg-card"
+                    >
+                      {t.openSection} ←
+                    </Link>
+                  </div>
+                </details>
               ))}
+
+              <div className="mt-3 border-t border-border pt-3">
+                <div className="mb-1 px-3.5 font-head text-sm font-extrabold text-primary">{t.toolsTitle}</div>
+                {extras.map((ex) => (
+                  <Link
+                    key={ex.slug}
+                    href={`/${ex.slug}/`}
+                    onClick={() => setSideOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-foreground transition-colors hover:bg-card hover:text-primary"
+                  >
+                    <TopicIcon name={ex.icon} size={17} className="shrink-0 text-primary" />
+                    <span>{lang === 'ar' ? ex.titleAr : ex.titleEn}</span>
+                  </Link>
+                ))}
+              </div>
             </nav>
           </SheetContent>
         </Sheet>

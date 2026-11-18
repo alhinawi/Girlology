@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { Heart, ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { useApp } from './Lang';
 import { articles } from '@/lib/articles';
-import { totalArticles } from '@/lib/content';
+import { totalArticles, sections, extras } from '@/lib/content';
+import { tips } from '@/lib/extras';
 import TopicIcon from './topic-icon';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -52,7 +53,7 @@ export default function Home() {
         <div className="mx-auto mt-11 grid w-full max-w-[1180px] grid-cols-2 gap-4 px-[22px] md:grid-cols-4">
           {[
             { n: String(totalArticles), l: t.stat1 },
-            { n: '50+', l: t.stat2 },
+            { n: String(tips.length) + '+', l: t.stat2 },
             { n: '100%', l: t.stat3 },
             { n: '0$', l: t.stat4 },
           ].map((s, i) => (
@@ -70,41 +71,99 @@ export default function Home() {
           <h2 className="font-head text-[clamp(1.6rem,3vw,2.3rem)] font-black">{t.sectionsTitle}</h2>
           <p className="max-w-[70ch] text-muted-foreground">{t.sectionsLead}</p>
         </div>
-        <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((a, i) => {
-            const done = read.includes(a.slug);
-            return (
-              <Link
-                key={a.slug}
-                href={`/article/${a.slug}/`}
-                className="group flex flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:bg-accent"
-              >
-                <div className="overflow-hidden">
-                  <img
-                    className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                    src={a.img}
-                    alt={lang === 'ar' ? a.titleAr : a.titleEn}
-                    loading={i > 2 ? 'lazy' : undefined}
-                  />
-                </div>
-                <div className="flex flex-1 flex-col gap-2.5 p-5">
-                  <Badge variant="secondary" className="gap-1.5 self-start rounded-full bg-primary/10 font-head text-xs font-bold text-primary hover:bg-primary/10">
-                    <TopicIcon name={a.icon} size={13} /> {t.sectionsKicker} {i + 1}
-                  </Badge>
-                  <h3 className="font-head text-xl font-extrabold">{lang === 'ar' ? a.titleAr : a.titleEn}</h3>
-                  <p className="flex-1 text-[0.98rem] text-muted-foreground">{lang === 'ar' ? a.excerptAr : a.excerptEn}</p>
-                  <div className="mt-1.5 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-2 font-head font-extrabold text-primary">
-                      {t.readMore} <Arrow size={15} />
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-                      {done ? <><Check size={14} /> {t.alreadyRead}</> : <>{a.minutes} {t.minute}</>}
-                    </span>
+
+        {sections.map((sec) => {
+          const topics = sec.topics
+            .map((slug) => articles.find((a) => a.slug === slug))
+            .filter((a): a is (typeof articles)[number] => Boolean(a));
+          return (
+            <div key={sec.slug} className="mb-12">
+              <Link href={`/section/${sec.slug}/`} className="group mb-5 flex items-end justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2.5 font-head text-sm font-extrabold text-primary">
+                    <TopicIcon name={sec.icon} size={16} /> {t.sectionOf} — {topics.length} {t.topicsCount}
                   </div>
+                  <h3 className="mt-1 font-head text-2xl font-black transition-colors group-hover:text-primary md:text-[1.7rem]">
+                    {lang === 'ar' ? sec.titleAr : sec.titleEn}
+                  </h3>
+                  <p className="mt-1 max-w-[65ch] text-muted-foreground">{lang === 'ar' ? sec.descAr : sec.descEn}</p>
                 </div>
+                <span className="hidden shrink-0 items-center gap-2 font-head font-extrabold text-primary sm:inline-flex">
+                  {t.openSection} <Arrow size={16} />
+                </span>
               </Link>
-            );
-          })}
+              <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
+                {topics.map((a) => {
+                  const done = read.includes(a.slug);
+                  return (
+                    <Link
+                      key={a.slug}
+                      href={`/article/${a.slug}/`}
+                      className="group flex flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:bg-accent"
+                    >
+                      <div className="overflow-hidden">
+                        <img
+                          className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                          src={a.img}
+                          alt={lang === 'ar' ? a.titleAr : a.titleEn}
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col gap-2.5 p-5">
+                        <Badge variant="secondary" className="gap-1.5 self-start rounded-full bg-primary/10 font-head text-xs font-bold text-primary hover:bg-primary/10">
+                          <TopicIcon name={a.icon} size={13} /> {lang === 'ar' ? sec.titleAr : sec.titleEn}
+                        </Badge>
+                        <h4 className="font-head text-xl font-extrabold">{lang === 'ar' ? a.titleAr : a.titleEn}</h4>
+                        <p className="flex-1 text-[0.98rem] text-muted-foreground">{lang === 'ar' ? a.excerptAr : a.excerptEn}</p>
+                        <div className="mt-1.5 flex items-center justify-between">
+                          <span className="inline-flex items-center gap-2 font-head font-extrabold text-primary">
+                            {t.readMore} <Arrow size={15} />
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
+                            {done ? <><Check size={14} /> {t.alreadyRead}</> : <>{a.minutes} {t.minute}</>}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </section>
+
+      <section className="mx-auto w-full max-w-[1180px] px-[22px]">
+        <div className="mb-7 mt-4">
+          <div className="font-head font-extrabold tracking-wide text-primary">{t.extrasKicker}</div>
+          <h2 className="font-head text-[clamp(1.6rem,3vw,2.3rem)] font-black">{t.extrasTitle}</h2>
+          <p className="max-w-[70ch] text-muted-foreground">{t.extrasLead}</p>
+        </div>
+        <div className="grid grid-cols-1 gap-[22px] sm:grid-cols-2 lg:grid-cols-3">
+          {extras.map((ex) => (
+            <Link
+              key={ex.slug}
+              href={`/${ex.slug}/`}
+              className="group flex flex-col overflow-hidden rounded-[20px] border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:bg-accent"
+            >
+              <div className="overflow-hidden">
+                <img
+                  className="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                  src={ex.img}
+                  alt={lang === 'ar' ? ex.titleAr : ex.titleEn}
+                />
+              </div>
+              <div className="flex flex-1 flex-col gap-2.5 p-5">
+                <Badge variant="secondary" className="gap-1.5 self-start rounded-full bg-primary/10 font-head text-xs font-bold text-primary hover:bg-primary/10">
+                  <TopicIcon name={ex.icon} size={13} /> {t.extrasKicker}
+                </Badge>
+                <h4 className="font-head text-xl font-extrabold">{lang === 'ar' ? ex.titleAr : ex.titleEn}</h4>
+                <p className="flex-1 text-[0.98rem] text-muted-foreground">{lang === 'ar' ? ex.descAr : ex.descEn}</p>
+                <span className="mt-1.5 inline-flex items-center gap-2 font-head font-extrabold text-primary">
+                  {t.openSection} <Arrow size={15} />
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 

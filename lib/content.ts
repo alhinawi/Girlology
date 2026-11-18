@@ -327,14 +327,20 @@ export const extras: Extra[] = [
   {
     slug: 'pickup-lines', icon: 'chat', img: '/images/conversation-photo.jpg',
     titleAr: 'كلام يفتح حوار', titleEn: 'Pickup Lines',
-    descAr: '30 بداية كلام ومجاملة بالمصري، من غير تصنع ولا ضغط. اختار اللي يناسب الموقف وخليه بصوتك.',
-    descEn: '30 respectful openers and compliments. Choose for the moment and make the words your own.',
+    descAr: '48 بداية كلام ومجاملة بالمصري، من غير تصنع ولا ضغط. اختار اللي يناسب الموقف وخليه بصوتك.',
+    descEn: '48 respectful openers and compliments. Choose for the moment and make the words your own.',
   },
   {
     slug: 'morning-texts', icon: 'flower', img: '/images/morning-photo.jpg',
     titleAr: 'رسايل الصباح', titleEn: 'Morning Texts',
-    descAr: '30 رسالة صباح، من السلام الخفيف للتشجيع وكلام الحب في علاقة واضحة. رسالة واحدة بذوق تكفي.',
-    descEn: '30 morning texts, from a simple hello to encouragement and affection for a partner. One thoughtful message is enough.',
+    descAr: '48 رسالة صباح، من الرومانسية والهزار للتشجيع والاهتمام. اختار حسب علاقتكم، ورسالة واحدة بذوق تكفي.',
+    descEn: '48 morning texts, from romance and humor to encouragement and care. Choose for your relationship. One thoughtful message is enough.',
+  },
+  {
+    slug: 'conversation-topics', icon: 'chat', img: '/images/conversation-photo.jpg',
+    titleAr: 'مواضيع تفتح كلام', titleEn: 'Conversation Topics',
+    descAr: '24 سؤال للتعارف والهوايات والهزار والعلاقات. افتح مساحة للكلام، مش تحقيق.',
+    descEn: '24 questions about personality, interests, fun and relationships. Make room for a conversation, not an interview.',
   },
   {
     slug: 'tips',

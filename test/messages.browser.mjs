@@ -13,20 +13,21 @@ try {
     const context = await browser.newContext({ viewport: { width, height: 900 }, permissions: ['clipboard-read', 'clipboard-write'] });
     const page = await context.newPage();
     page.on('pageerror', (e) => errors.push(e.message));
-    for (const kind of ['pickup-lines', 'morning-texts']) {
+    for (const kind of ['pickup-lines', 'morning-texts', 'conversation-topics']) {
+      const expected = kind === 'conversation-topics' ? 24 : 48;
       await page.goto(`${base}/${kind}/`);
       await page.locator('[data-testid="message-card"]').first().waitFor();
       await page.evaluate(() => document.fonts.ready);
       assert.equal(await page.locator('html').getAttribute('lang'), 'ar');
-      assert.equal(await page.locator('[data-testid="message-card"]').count(), 30);
+      assert.equal(await page.locator('[data-testid="message-card"]').count(), expected);
       assert.equal(await page.locator('img').evaluateAll((images) => images.every((i) => i.complete && i.naturalWidth > 0)), true);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
       const screenshot = `/downloads/girlology-checks/${kind}-ar-${width}.png`;
-      await page.screenshot({ path: screenshot, fullPage: width === 390 });
+      await page.screenshot({ path: screenshot, fullPage: false });
       const groups = page.getByRole('group', { name: 'التصنيفات' }).getByRole('button');
-      for (let i = 1; i < 6; i++) {
+      for (let i = 1; i < 5; i++) {
         await groups.nth(i).click();
-        assert.equal(await page.locator('[data-testid="message-card"]').count(), 6);
+        assert.equal(await page.locator('[data-testid="message-card"]').count(), expected / 4);
         assert.equal(await page.locator('[data-testid="category-tip"]').count(), 1);
       }
       await groups.first().click();
@@ -57,15 +58,16 @@ try {
       await page.getByRole('button', { name: 'settings', exact: true }).click();
       await page.getByRole('switch', { name: 'language', exact: true }).click();
       await page.getByRole('button', { name: 'close', exact: true }).click();
-      console.log(`PASS ${kind} ${width}: language, 5 filters, search, clipboard, failure fallback, images, overflow`);
+      console.log(`PASS ${kind} ${width}: language, 4 filters, search, clipboard, failure fallback, images, overflow`);
     }
     await page.goto(`${base}/`);
     assert.ok(await page.locator('a[href="/pickup-lines/"]').count() >= 1);
     assert.ok(await page.locator('a[href="/morning-texts/"]').count() >= 1);
+    assert.ok(await page.locator('a[href="/conversation-topics/"]').count() >= 1);
     await page.getByRole('button', { name: 'menu', exact: true }).click();
     const dialog = page.getByRole('dialog');
-    await dialog.locator('a[href="/morning-texts/"]').click();
-    await page.waitForURL('**/morning-texts/');
+    await dialog.locator('a[href="/conversation-topics/"]').click();
+    await page.waitForURL('**/conversation-topics/');
     await context.close();
   }
   assert.deepEqual(errors, []);

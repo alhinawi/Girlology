@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Check, Copy, Search, ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { useApp } from './Lang';
 import { extras } from '@/lib/content';
-import { messageCategories, messageExamples, MessageKind } from '@/lib/messages';
+import { messageCategories, messageExamples, type MessageKind } from '@/lib/messages';
 import ExtraHero from './ExtraHero';
 
 export default function MessagesPage({ kind }: { kind: MessageKind }) {
@@ -46,13 +46,13 @@ export default function MessagesPage({ kind }: { kind: MessageKind }) {
         <section aria-label={ar ? 'قبل ما تبعت' : 'Before you send'} className="rounded-[22px] border border-primary/25 bg-primary/5 p-5 md:p-6">
           <h2 className="flex items-center gap-2 font-head text-lg font-extrabold text-primary"><ShieldCheck className="size-5 shrink-0" />{ar ? 'الكلام الحلو من غير ضغط' : 'Warm words, no pressure'}</h2>
           <p className="mt-2 leading-8 text-muted-foreground">{ar ? 'دي أفكار تستلهم منها، مش رسائل مضمونة ولا تعليمات تبعتها بالجملة. اختار اللي شبهك وشبه علاقتكم، وغير أي تفصيلة مش حقيقية. ابعت بس لو التواصل بينكم مرحب بيه. لو قالت لأ أو مش حابة تكمل، احترم ده ووقف. ولو مردتش، متكررّش الرسالة.' : 'These are ideas, not guaranteed scripts or a bulk-messaging plan. Choose what fits you and your relationship, and change any detail that is not true. Only message where contact is welcome. If she says no or wants to stop, respect that and stop. Do not repeat an unanswered message.'}</p>
-          <p className="mt-2 text-sm leading-7 text-muted-foreground">{ar ? 'بدل [اسمك] باسمك. متقولش إنك سمعت أغنية أو بعت ترشيح إلا لو عملت ده فعلا. مفيش إرسال تلقائي هنا، النسخ بيحط النص عندك وبس.' : 'Replace [your name]. Only say you listened to a song or sent a recommendation if you actually did. Nothing is sent automatically: copying only puts the text on your clipboard.'}</p>
+          <p className="mt-2 text-sm leading-7 text-muted-foreground">{ar ? 'اختار جملة مناسبة لدرجة القرب بينكم، ومتقولش تفصيلة مش حقيقية. الهزار عن الإذن أو المزاج مجرد هزار بين ناس مرتاحة لبعض، مش تحكم في مشاعر حد. مفيش إرسال تلقائي هنا، النسخ بيحط النص عندك وبس.' : 'Choose a line that fits how well you know each other, and do not include details that are not true. Jokes about permission or moods are only playful between people who are comfortable with each other, never control over anyone\'s feelings. Nothing is sent automatically: copying only puts the text on your clipboard.'}</p>
         </section>
         <aside className="rounded-[22px] border border-border bg-card p-5">
           <span className="font-head text-4xl font-black text-primary">{all.length}</span>
           <p className="mt-1 font-head font-bold">{ar ? 'مثال بالمصري وبالإنجليزي' : 'examples in Arabic and English'}</p>
-          <p className="mt-2 text-sm leading-7 text-muted-foreground">{ar ? '5 تصنيفات، اختار حسب الموقف ودرجة القرب، مش حسب أحلى جملة وخلاص.' : '5 categories. Choose for the situation and your relationship, not simply the sweetest line.'}</p>
-          <Link className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-primary underline underline-offset-4" href={kind === 'pickup-lines' ? '/morning-texts/' : '/pickup-lines/'}>{ar ? (kind === 'pickup-lines' ? 'شوف رسايل الصباح' : 'شوف كلام يفتح حوار') : (kind === 'pickup-lines' ? 'Explore morning texts' : 'Explore conversation starters')}<ArrowUpRight size={15} /></Link>
+          <p className="mt-2 text-sm leading-7 text-muted-foreground">{ar ? `${categories.length} تصنيفات، اختار حسب الموقف ودرجة القرب، مش حسب أحلى جملة وخلاص.` : `${categories.length} categories. Choose for the situation and your relationship, not simply the sweetest line.`}</p>
+          <nav aria-label={ar ? 'مكتبات الكلام' : 'Conversation libraries'} className="mt-3 flex flex-col gap-3">{(['pickup-lines', 'morning-texts', 'conversation-topics'] as MessageKind[]).filter((value) => value !== kind).map((value) => { const item = extras.find((entry) => entry.slug === value)!; return <Link key={value} className="inline-flex items-center gap-1 text-sm font-bold text-primary underline underline-offset-4" href={`/${value}/`}>{ar ? item.titleAr : item.titleEn}<ArrowUpRight size={15} /></Link>; })}</nav>
         </aside>
       </div>
 

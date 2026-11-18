@@ -29,6 +29,8 @@ A premium, fully bilingual (Egyptian Arabic / English) guide site about respectf
 ## Stack
 
 - Next.js 15 (static export) + React 19 + TypeScript
+- Tailwind CSS 4 + shadcn/ui components (button, card, sheet, switch, badge, separator)
+- Lucide SVG icons
 - Deployed on Cloudflare Pages: girlology.pages.dev
 
 ## Run locally
